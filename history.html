@@ -17,18 +17,40 @@
     }
     .scrap-data {
       display: flex;
-      gap: 15px; /* Espacement entre les éléments */
+      justify-content: center; /* Centre le conteneur horizontalement */
+      gap: 15px;               /* Espace entre les éléments */
       margin-left: 20px;
     }
     .scrap-data p {
       margin: 0;
     }
-  </style>
+    #countdown {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .chart-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+</style>
 </head>
 <body>
   <h1>Historique des Scrapings LinkedIn</h1>
+  <div id="countdown">Prochain scraping dans : 5m 0s</div>
+
+  <!-- Conteneur pour le graphique global -->
+  <div class="chart-container">
+    <canvas id="global-chart"></canvas>
+  </div>
+
   <div id="history"></div>
 
+  <!-- Chart.js (version UMD) -->
+  <script src="chart.umd.js"></script>
   <script src="history.js"></script>
 </body>
 </html>

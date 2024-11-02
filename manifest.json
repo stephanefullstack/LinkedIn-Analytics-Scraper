@@ -4,9 +4,10 @@
   "version": "1.0",
   "description": "Extension pour scraper les statistiques LinkedIn et sauvegarder dans un CSV local.",
   "permissions": [
-    "scripting",
+    "alarms",
     "tabs",
     "storage",
+    "scripting",
     "activeTab",
     "downloads"
   ],
@@ -18,12 +19,8 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_icon": {
-
-    }
+    "default_icon": {}
   },
-  "options_page": "dashboard.html",
-  "icons": {
-
-  }
+  "options_page": "history.html",
+  "icons": {}
 }

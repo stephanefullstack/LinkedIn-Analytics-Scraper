@@ -7,6 +7,9 @@
 > - **Historique des statistiques** regroupé par publication
 > - **Téléchargement CSV** de l'historique complet
 > - **Actualisation en temps réel** de l'interface d'historique
+> - **Compte à rebours** indiquant le temps restant avant le prochain scraping
+> - **Graphique global** superposant les courbes d'impressions de tous les posts
+> - **Graphiques individuels** pour chaque post avec données d’impressions dans un format centré et aligné horizontalement
 
 ---
 
@@ -28,21 +31,23 @@
 - **Affichage de l'Historique** : Visualisez les statistiques passées regroupées par publication dans une interface dédiée.
 - **Export CSV** : Téléchargez l'historique des données en un clic pour une analyse ultérieure.
 - **Mises à jour en Temps Réel** : L'interface d'historique se met à jour automatiquement après chaque scraping.
+- **Compte à rebours** : Affiche dans la page historique le temps restant avant le prochain scraping.
+- **Graphique Global** : Un graphique global en haut de la page superpose les courbes d'impressions de tous les posts pour une vue d’ensemble.
+- **Graphiques Individuels et Affichage Centré** : Chaque post dispose de son propre graphique avec un affichage centré et en ligne des détails d’impressions et de date/heure.
 
 ## 🔧 Prérequis
 
-- **Navigateur Chromium requis** : Cette extension est compatible avec Google Chrome, Microsoft Edge, ou tout autre navigateur basé sur Chromium.
+- **Navigateur Chromium** : Cette extension est compatible avec Google Chrome, Microsoft Edge, ou tout autre navigateur basé sur Chromium.
 - **Compte LinkedIn avec accès aux Analytics** : Pour collecter les données, assurez-vous d'être connecté à votre compte LinkedIn et d'avoir accès aux statistiques sur la [page des Analytics LinkedIn](https://www.linkedin.com/analytics/creator/top-posts/?metricType=IMPRESSIONS&resultType=DUMMY&timeRange=past_1_year).
-
 
 ---
 
 ## 🛠️ Installation
 
 1. **Téléchargez le code source** :
-   - Clonez le dépôt depuis GitHub : 
+   - Clonez le dépôt depuis GitHub :
      ```bash
-     git clone git@github.com:stephanefullstack/LinkedIn-Analytics-Scraper.git
+     git clone https://github.com/stephanefullstack/LinkedIn-Analytics-Scraper.git
      ```
    - Ou téléchargez le fichier ZIP depuis GitHub et extrayez-le.
 
@@ -54,6 +59,11 @@
 
 3. **Configurer les permissions** : Assurez-vous que l'extension a accès aux onglets et à LinkedIn.
 
+4. **Configuration locale de Chart.js** : Téléchargez `chart.umd.js` depuis [cdnjs.com](https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.umd.js) ou un autre CDN fiable et placez-le dans le même dossier que `history.html` et `history.js`. Chargez-le en local dans `history.html` avec :
+   ```html
+   <script src="chart.umd.js"></script>
+   ```
+
 ---
 
 ## 🚀 Utilisation
@@ -63,7 +73,7 @@
    - Trois options sont disponibles :
      - **Scraper les données** : Lance un scraping manuel des statistiques.
      - **Télécharger l'historique en CSV** : Télécharge toutes les données enregistrées sous forme de fichier CSV.
-     - **Voir l'historique** : Ouvre une page de tableau de bord dans un nouvel onglet pour visualiser les statistiques passées, regroupées par publication.
+     - **Voir l'historique** : Ouvre une page de tableau de bord dans un nouvel onglet pour visualiser les statistiques passées, regroupées par publication, ainsi que le **compte à rebours avant le prochain scraping**.
 
 2. **Scraping Automatique** :
    - L’extension scrappe automatiquement toutes les 5 minutes.
@@ -72,6 +82,11 @@
 3. **Affichage de l'Historique en Temps Réel** :
    - Si la page d'historique est ouverte (via le bouton **Voir l'historique**), elle se mettra à jour automatiquement après chaque scraping.
    - Les données sont regroupées par publication (`postText`), avec les impressions, la date et l’heure de chaque scraping.
+   - Un **compte à rebours** indique également le temps restant avant le prochain scraping.
+
+4. **Graphique Global et Graphiques Individuels** :
+   - En haut de la page, un **graphique global** superpose les courbes de tous les posts, facilitant la comparaison des tendances.
+   - Chaque post dispose également de son propre graphique individuel et de ses données d'impressions et de date/heure, affichées de manière **centrée et alignée en ligne**.
 
 ---
 
@@ -81,7 +96,7 @@
 - **popup.html** et **popup.js** : Interface utilisateur permettant de lancer le scraping, de télécharger les données et de voir l'historique.
 - **content.js** : Script injecté dans la page LinkedIn Analytics pour effectuer le scraping.
 - **background.js** : Exécute le scraping automatique toutes les 5 minutes, stocke les données et notifie la page d'historique pour une mise à jour en temps réel.
-- **history.html** et **history.js** : Page dédiée pour afficher l'historique des données, regroupées par publication.
+- **history.html** et **history.js** : Page dédiée pour afficher l'historique des données, incluant un **graphique global** et des **graphiques individuels** pour chaque post, avec un affichage centré des données d'impressions et de date/heure.
 
 ---
 

@@ -1,52 +1,7 @@
-// Fonction pour convertir les données en CSV
-function convertToCSV(data) {
-  const headers = ["Post Text", "Impressions", "Date Scraped", "Time Scraped"];
-  const csvRows = [];
-
-  // Ajouter les en-têtes
-  csvRows.push(headers.join(","));
-
-  // Ajouter les données
-  data.forEach(row => {
-    const values = [
-      row.postText,
-      row.impressions,
-      row.dateScraped,
-      row.timeScraped
-    ];
-    csvRows.push(values.join(","));
-  });
-
-  return csvRows.join("\n");
-}
-
-// Fonction pour télécharger l'historique de scraping en CSV
-function downloadCSV() {
-  chrome.storage.local.get(["scrapeHistory"], result => {
-    const scrapeHistory = result.scrapeHistory || [];
-
-    if (scrapeHistory.length === 0) {
-      console.log("Aucune donnée disponible pour le téléchargement.");
-      return;
-    }
-
-    // Convertir l'historique en CSV
-    const csvContent = convertToCSV(scrapeHistory);
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const reader = new FileReader();
-
-    // Utiliser FileReader pour lire le Blob comme une URL de données
-    reader.onload = () => {
-      chrome.downloads.download({
-        url: reader.result,
-        filename: "LinkedIn_Analytics_History.csv",
-        saveAs: true
-      });
-    };
-
-    reader.readAsDataURL(blob);
-  });
-}
+// Créer une alarme toutes les 5 minutes pour déclencher le scraping
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.alarms.create("scrapeAlarm", { periodInMinutes: 5 });
+});
 
 // Fonction principale pour ouvrir un onglet, scrapper et ajouter à l'historique
 function openAndScrape() {
@@ -75,7 +30,7 @@ function openAndScrape() {
 
             console.log("Données de scraping ajoutées à l'historique.");
 
-            // Envoyer un message à toutes les pages ouvertes pour indiquer que l'historique est mis à jour
+            // Envoyer un message pour indiquer que l'historique est mis à jour
             chrome.runtime.sendMessage({ action: "updateHistory" });
 
             // Fermer l'onglet après le scraping
@@ -89,19 +44,20 @@ function openAndScrape() {
   });
 }
 
-// Fonction pour déclencher le scraping toutes les 5 minutes
-setInterval(() => {
-  console.log("Déclenchement automatique du scraping.");
-  openAndScrape();
-}, 300000); // 300000 millisecondes = 5 minutes
+// Démarrer le compte à rebours de 5 minutes
+let nextScrapeTime = Date.now() + 5 * 60 * 1000; // Prochain scraping dans 5 minutes
 
-// Écouter un message pour déclencher la séquence complète ou le téléchargement
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "startScraping") {
+// Écouter l'alarme pour lancer le scraping toutes les 5 minutes
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === "scrapeAlarm") {
+    console.log("Déclenchement automatique du scraping via alarme.");
     openAndScrape();
-    sendResponse({ status: "Processus de scraping lancé..." });
-  } else if (request.action === "downloadHistory") {
-    downloadCSV();
-    sendResponse({ status: "Téléchargement de l'historique en cours..." });
+    nextScrapeTime = Date.now() + 5 * 60 * 1000; // Réinitialiser le compte à rebours
   }
 });
+
+// Envoyer le temps restant à `history.js` toutes les secondes
+setInterval(() => {
+  const timeRemaining = Math.max(0, nextScrapeTime - Date.now());
+  chrome.runtime.sendMessage({ action: "updateTimer", timeRemaining });
+}, 1000); // Envoyer le temps restant chaque seconde
