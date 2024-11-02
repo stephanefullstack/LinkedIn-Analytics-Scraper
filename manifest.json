@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Analytics Scraper",
+  "version": "1.0",
+  "description": "Extension pour scraper les statistiques LinkedIn et sauvegarder dans un CSV local.",
+  "permissions": [
+    "scripting",
+    "tabs",
+    "storage",
+    "activeTab",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+
+    }
+  },
+  "options_page": "dashboard.html",
+  "icons": {
+
+  }
+}
