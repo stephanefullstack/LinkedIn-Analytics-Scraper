@@ -31,8 +31,9 @@
 
 ## 🔧 Prérequis
 
-- **Navigateur Chromium** : Cette extension est compatible avec Google Chrome, Microsoft Edge ou tout autre navigateur basé sur Chromium.
-- **Compte LinkedIn avec accès aux Analytics** : L'extension utilise LinkedIn Analytics, assurez-vous d’être connecté à LinkedIn pour accéder aux données de votre profil.
+- **Navigateur Chromium requis** : Cette extension est compatible avec Google Chrome, Microsoft Edge, ou tout autre navigateur basé sur Chromium.
+- **Compte LinkedIn avec accès aux Analytics** : Pour collecter les données, assurez-vous d'être connecté à votre compte LinkedIn et d'avoir accès aux statistiques sur la [page des Analytics LinkedIn](https://www.linkedin.com/analytics/creator/top-posts/?metricType=IMPRESSIONS&resultType=DUMMY&timeRange=past_1_year).
+
 
 ---
 
@@ -41,7 +42,7 @@
 1. **Téléchargez le code source** :
    - Clonez le dépôt depuis GitHub : 
      ```bash
-     git clone https://github.com/votre-utilisateur/linkedin-analytics-scraper.git
+     git clone git@github.com:stephanefullstack/LinkedIn-Analytics-Scraper.git
      ```
    - Ou téléchargez le fichier ZIP depuis GitHub et extrayez-le.
 
