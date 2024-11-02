@@ -1,4 +1,4 @@
-📊 LinkedIn Analytics Scraper
+<h1>📊 LinkedIn Analytics Scraper</h1>
 
 **LinkedIn Analytics Scraper** est une extension de navigateur puissante qui vous permet de collecter automatiquement les statistiques de vos publications LinkedIn depuis l’onglet Analytics. Le scraping s'effectue automatiquement toutes les 5 minutes, en stockant l'historique complet des impressions, de la date et de l'heure de chaque publication.
 
